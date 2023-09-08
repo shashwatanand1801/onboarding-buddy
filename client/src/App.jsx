@@ -9,6 +9,8 @@ const systemMessage = { //  Explain things like you're talking to a software pro
   "role": "system", "content": "You are python assestment assistant, you have to ask 5 questions to the user one by one and rate the user out of 10."
 }
 
+let flag = true
+
 function App() {
   const [messages, setMessages] = useState([
     {
@@ -30,10 +32,20 @@ function App() {
     
     setMessages(newMessages);
 
+    if(message == "####"){
+      flag = false;
+      setMessages([...newMessages, {
+        message: "Bye Bye Nice Talking to you!",
+        sender: "ChatGPT"
+      }])
+    }
+
     // Initial system message to determine ChatGPT functionality
     // How it responds, how it talks, etc.
-    setIsTyping(true);
-    await processMessageToChatGPT(newMessages);
+    if(flag){
+      setIsTyping(true);
+      await processMessageToChatGPT(newMessages);
+    }
   };
 
   async function processMessageToChatGPT(chatMessages) { // messages is an array of messages
@@ -74,7 +86,7 @@ function App() {
     }).then((data) => {
       return data.json();
     }).then((data) => {
-      console.log(data);
+      console.log(data[0]);
       setMessages([...chatMessages, {
         message: data.choices[0].message.content,
         sender: "ChatGPT"

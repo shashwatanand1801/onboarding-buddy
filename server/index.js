@@ -35,11 +35,6 @@ app.get('/', (req, res)=>{
     res.send("Welcome to root URL of Server");
 })
 
-app.get('/get_info', (req, res)=>{
-    
-})
-
-
 app.use("/server/db", dbRouter)
 
 

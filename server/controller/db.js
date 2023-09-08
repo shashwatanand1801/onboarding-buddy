@@ -1,33 +1,77 @@
 const dotenv = require('dotenv')
-const MongoClient = require("mongodb");
+const MongoClient = require("mongodb").MongoClient;
 
 //Load the env file
 dotenv.config();
 
 class Db {
-    async getCandidateInfo(req, res) {
+    async getCandidateInfo(req, res) {        
 
-        console.log("inside get ")
+        let {email} = req.body;
+
+        let skills
+        let name
 
         const uri = process.env.DB_HOST;
-        console.log("DB HOST : ", uri)
         const client = new MongoClient(uri);
+
         try {
-            const database = client.db("test");
-            const movies = database.collection("mappings");
+            const database = client.db(process.env.DB_NAME);
+            const col = database.collection(process.env.COLLECTION_NAME);
             // Create a filter for movies with the title "Random Harvest"
-            const filter = { email: "shash@google.com" };
+            const filter = { email: email };
+            
+            const document = await col.findOne(filter);
+
+            if(JSON.stringify(document) == null){
+                return res.json({
+                    failure : "NO data for the email in DB"
+            })
+            }
+
+            skills = document.skills
+            name = document.name
+          } finally {
+            // Close the connection after the operation completes
+            await client.close();
+          }
+
+    return res.json({
+        skills: skills,
+        name: name
+    })
+
+  }
+
+  async addCandidateInfo(req, res) {
+
+    let {email, skills} = req.body;
+
+    const uri = process.env.DB_HOST;
+    const client = new MongoClient(uri);
+
+        
+
+    if (!email || !skills) {
+      return res.json({ error: "Email or skill not provided" });
+    }
+    else {
+        try {
+            const database = client.db(process.env.DB_NAME);
+            const col = database.collection(process.env.COLLECTION_NAME);
+            
+            const filter = { email: email };
             /* Set the upsert option to insert a document if no documents match
             the filter */
             const options = { upsert: true };
-            // Specify the update to set a value for the plot field
+            // Specify the update to set a value for the skill field
             const updateDoc = {
               $set: {
-                name: `New name as : ${Math.random()}`
+                skills: skills
               },
             };
             // Update the first document that matches the filter
-            const result = await movies.updateOne(filter, updateDoc, options);
+            const result = await col.updateOne(filter, updateDoc, options);
             
             // Print the number of matching and modified documents
             console.log(
@@ -36,49 +80,12 @@ class Db {
           } finally {
             // Close the connection after the operation completes
             await client.close();
-          }
-    // try {
-    //   let candidateInfo = await mappingModel
-    //     .find({});
-    //   if (Mapping) {
-    //     return res.json({ Mappings });
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
-  }
-
-  async addCandidateInfo(req, res) {
-
-    console.log(req)
-
-    let {email} = req.body;
-
-    if (!email) {
-      return res.json({ error: "Email not provided" });
-    }
-    else {
-      try {
-
-        const result = await gptController.call(bFile, specification, bisName)
-
-        console.log(result)
-
-        let newMappings = new mappingModel({
-          mapping: JSON.parse(result),
-          email: email,
-          name: bisName
-        });
-        let save = await newMappings.save();
-        if (save) {
-          return res.json({ success: "Mappings save in DB successfully" ,
-                            mapping: JSON.parse(result)});
         }
-      } catch (err) {
-        console.log(err);
-      }
     }
+
+    return res.json({
+        success: "Updated Skills"
+    })
   }
 }
 

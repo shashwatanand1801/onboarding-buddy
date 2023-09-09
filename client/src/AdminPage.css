@@ -1,0 +1,45 @@
+/* src/AdminPage.css */
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .admin-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .skill-input {
+    width: 200px;
+  }
+  
+  .add-skill-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .add-skill-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .submit-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-top: 10px;
+  }
+  
+  .submit-button:hover {
+    background-color: #1d8e3e;
+  }
+  

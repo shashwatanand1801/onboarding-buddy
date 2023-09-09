@@ -43,7 +43,7 @@ class Db {
 
   }
 
-  async addCandidateInfo(req, res) {
+  async updateCandidateInfo(req, res) {
 
     let {email, skills} = req.body;
 
@@ -86,6 +86,37 @@ class Db {
     return res.json({
         success: "Updated Skills"
     })
+  }
+
+  async addCandidateInfo(req, res) {
+
+    let candidateInfo = req.body;
+
+    const uri = process.env.DB_HOST;
+    const client = new MongoClient(uri);
+
+    if (!candidateInfo) {
+      return res.json({ error: "Candidate Info not provided" });
+    }
+    else {
+        try {
+            const database = client.db(process.env.DB_NAME);
+            const col = database.collection(process.env.COLLECTION_NAME);
+            console.log(candidateInfo)
+            
+            const result = await col.insertOne(candidateInfo);
+            res.status(201).json({
+              success: "Stored in db"
+            });
+            
+          } catch (error) {
+            console.error('Error adding item:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+          }finally {
+            // Close the connection after the operation completes
+            await client.close();
+        }
+    }
   }
 }
 

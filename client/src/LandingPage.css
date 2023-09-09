@@ -1,0 +1,39 @@
+/* src/LandingPage.css */
+.landing-page {
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .header {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .buddy-image {
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  /* Change text color to dark (black) */
+  h1, p {
+    color: #000; /* Black text color */
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  

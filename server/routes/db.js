@@ -10,6 +10,8 @@ console.log("Router")
 
 router.post("/get-candidate-info", jsonParser, dbController.getCandidateInfo)
 
+router.post("/update-candidate-info", jsonParser, dbController.updateCandidateInfo)
+
 router.post("/add-candidate-info", jsonParser, dbController.addCandidateInfo)
 
 

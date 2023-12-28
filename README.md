@@ -73,7 +73,7 @@ Don't forget to give the project a star! Thanks again!
 
 Shashwat anand- [@shashwat_anand](https://www.linkedin.com/in/shashwat-anand/) - shashwatanand1801@gmail.com
 
-Project Link: [https://github.com/shashwatanand1801/Recommender-System-Comparision](https://github.com/shashwatanand1801/Recommender-System-Comparision)
+Project Link: [https://github.com/shashwatanand1801/onboarding-buddy](https://github.com/shashwatanand1801/onboarding-buddy)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
